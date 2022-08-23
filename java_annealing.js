@@ -22,7 +22,7 @@ class annealing {
             let calc = Math.exp(-delta / sigma);
             let random = Math.random();
             //
-            document.getElementById("d1").innerHTML += 'calc: ' + calc.toFixed(6) + '/ random:  '+ random.toFixed(3) + '<br />';
+            //document.getElementById("d1").innerHTML += 'calc: ' + calc.toFixed(6) + '/ random:  '+ random.toFixed(3) + '<br />';
             if (calc > random) {
                 return true;
             } else {

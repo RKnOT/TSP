@@ -45,6 +45,7 @@
 
     <div class="defaultTextBox Textbox_pos05"><button type="button" class="default_button" id="b3">original Tour</button>
         <button type="button" class="default_button" id="b4">current Tour</button>
+        <button type="button" class="default_button" id="b5">Stop</button>
     </div>
 
 
@@ -59,6 +60,7 @@
         	document.getElementById('b2').addEventListener('click', optimize);
         	document.getElementById('b3').addEventListener('click', original_tour);
         	document.getElementById('b4').addEventListener('click', current_tour);
+        	document.getElementById('b5').addEventListener('click', stop_tour);
         }
         function disable_click_events(){
         	document.getElementById('b1').addEventListener('click', empty_event);
@@ -165,6 +167,11 @@
         function original_tour() {
             //h.print_tour('d1');
             up_date_canvas(h.tour_first);
+        }
+        function stop_tour(){
+        document.getElementById("d4").innerHTML += "tour stop  "  + "<br />";
+        clearInterval(intervalID);
+        
         }
 
         //-------------------
