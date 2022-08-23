@@ -1,8 +1,7 @@
 class annealing {
-    constructor(tour, sigma, sigma_reduktion, abbruch) {
+    constructor(tour, sigma, sigma_reduktion) {
         this.i = 1;
         this.abbruchZaehler = 0;
-        this.abbruch = abbruch;
         this.sigma = sigma;
         this.sigma_reduktion = sigma_reduktion;
         this.tour = tour;
@@ -35,18 +34,11 @@ class annealing {
         h.change_two_Orte(this.tour);
         let tausch_flag = this.ist_tausch_ok(this.tour, this.sigma);
         if (!tausch_flag) {
-            // to be done
-
-
             h.change_back_two_Orte(h.tour_n);
             this.abbruchZaehler++;
         } else {
-
             this.abbruchZaehler = 0;
             up_date_canvas(this.tour);
-
-
-
         }
         this.sigma *= 1 - this.sigma_reduktion;
         //document.getElementById("d1").innerHTML += "sigma   " + this.sigma.toFixed(3) + "<br />";

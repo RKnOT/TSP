@@ -36,14 +36,11 @@
 
     <div class="defaultTextBox Textbox_pos01">Anzahl Staedte: <input type="text" class="tbw" value="20" id="anzahl_staedte" /><button type="button" class="default_button" id='b1'>Generiere Rundreis </button></div>
 
-    <div class="defaultTextBox Textbox_pos02">Sigma: <input type="text" class="tbw" value="10" id="sigma"> Sigma Reduktion: <input type="text" class="tbw" value="0.005" id="sigma_reduktion"></div>
-
-    <div class="defaultTextBox Textbox_pos03">Abbruch n. <input type="text" class="tbw" value="-1" id="abbruch"> stab. Iterationen (-1 deaktivieren)</div>
-
-    <div class="defaultTextBox Textbox_pos04"><input type="text" class="tbw" value="20" id="iteration" /> ms pro Iteration
+    <div class="defaultTextBox Textbox_pos02">Sigma: <input type="text" class="tbw" value="10000" id="sigma"> Sigma Reduktion: <input type="text" class="tbw" value="0.005" id="sigma_reduktion"></div>
+    <div class="defaultTextBox Textbox_pos03"><input type="text" class="tbw" value="5" id="iteration" /> ms pro Iteration
         <button type="button" class="default_button" id="b2">Tour optimieren</button></div>
 
-    <div class="defaultTextBox Textbox_pos05"><button type="button" class="default_button" id="b3">original Tour</button>
+    <div class="defaultTextBox Textbox_pos04"><button type="button" class="default_button" id="b3">original Tour</button>
         <button type="button" class="default_button" id="b4">current Tour</button>
         <button type="button" class="default_button" id="b5">Stop</button>
     </div>
@@ -81,14 +78,13 @@
             "Iterationen": 0,
             "stabile Iterationen": 0,
             "Initaldistanz": 0.0,
-            "Current Distanz": 0.0,
             "Final Distanz": 0.0,
             "endtable": 'end',
             // nicht in tabelle
+            "Current Distanz": 0.0,
             "Anzahl_Staedte_input": 20,
             "Sigma_input": 0.5,
             "Sigma_reduction_input": 5,
-            "Abbruch_input": -1,
             "Iteration_input": 10,
         }
         let ui = new UI_TSP('tabelle', table_items);
@@ -114,7 +110,6 @@
 
             table_items['Anzahl_Staedte_input'] = ut.getInputValue("anzahl_staedte", 10);
             table_items['Sigma_reduction_input'] = ut.getInputValue("sigma_reduktion", 0.5, false);
-            table_items['Abbruch_input'] = ut.getInputValue("abbruch", -1);
             table_items['Iteration_input'] = ut.getInputValue("iteration", 10);
             table_items['stabile Iterationen'] = 0;
         }
@@ -175,6 +170,7 @@
                 //document.getElementById("d4").innerHTML += "tour stop  "  + intervalID +"<br />";
                 clearInterval(intervalID);
                 intervalID = -1;
+                print_tours(h.tour_n, h.tour_first, 'd1');
             }
         }
 
@@ -186,15 +182,25 @@
             var ui_v = read_UI();
             ut.clear_p_tag_content();
 
-            let abbruch = parseInt(table_items['Abbruch_input']);
-            an = new annealing(h.tour_n, table_items['Sigma'], table_items['Sigma_reduction_input'], abbruch);
+
+            an = new annealing(h.tour_n, table_items['Sigma'], table_items['Sigma_reduction_input']);
 
             disable_click_events();
             intervalID = setInterval(run_interval, interval);
 
+
         }
 
         //-------------------    
+        function print_tours(t_n, t_o, tack) {
+            document.getElementById(tack).innerHTML += 'Tour optimized  / Tour orignal ' + '<br />';
+            document.getElementById(tack).innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + t_n[0][0][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + t_o[0][0][2] + '<br />';
+            for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
+                document.getElementById(tack).innerHTML += '&nbsp;&nbsp &nbsp; &nbsp;' + t_n[1][i][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + t_o[1][i][2] + '<br />';
+            }
+
+
+        }
 
         function run_interval() {
             //document.getElementById("d1").innerHTML += 'new interval: '+paused+ '<br />';
@@ -217,14 +223,7 @@
 
                 current_tour();
                 ut.clear_p_tag_content();
-                document.getElementById("d1").innerHTML += 'Tour optimized  / Tour orignal ' + '<br />';
-                document.getElementById("d1").innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + h.tour_n[0][0][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[0][0][2] + '<br />';
-                for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
-                    document.getElementById("d1").innerHTML += '&nbsp;&nbsp &nbsp; &nbsp;' + h.tour_n[1][i][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[1][i][2] + '<br />';
-
-
-                }
-
+                print_tours(h.tour_n, h.tour_first, 'd1');
             } else {
                 enable_click_events();
 
