@@ -36,7 +36,7 @@ class annealing {
         if (!tausch_flag) {
             h.change_back_two_Orte(h.tour_n);
             this.abbruchZaehler++;
-
+// test!!!!!!!!
         } else {
 
             this.abbruchZaehler = 0;
