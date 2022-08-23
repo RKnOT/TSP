@@ -11,6 +11,7 @@ class annealing {
 
 
     }
+    // git test
     ist_tausch_ok(tour, sigma) {
         if (tour[4] == 0) {
             this.neue_Laenge = tour[2];
