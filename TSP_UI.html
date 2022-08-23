@@ -2,10 +2,10 @@
 
 <head>
     <!-- 
-        https://www.nerdwest.de
-        https://www.youtube.com/watch?v=chH06c60iKc
-
-     -->
+            https://www.nerdwest.de
+            https://www.youtube.com/watch?v=chH06c60iKc
+    
+         -->
 
     <title>TSP UI</title>
 
@@ -30,8 +30,8 @@
 
     <div class="canvas_absolute"><canvas id="canvas"></canvas></div>
     <!-- 
-
-		-->
+    
+            -->
 
 
     <div class="defaultTextBox Textbox_pos01">Anzahl Staedte: <input type="text" class="tbw" value="20" id="anzahl_staedte" /><button type="button" class="default_button" id='b1'>Generiere Rundreis </button></div>
@@ -52,25 +52,26 @@
     <table class="table table_pos_01" id="tabelle"></table>
 
     <script>
-        function empty_event(){}
-        
-        
-        function enable_click_events(){
-        	document.getElementById('b1').addEventListener('click', first_tour);
-        	document.getElementById('b2').addEventListener('click', optimize);
-        	document.getElementById('b3').addEventListener('click', original_tour);
-        	document.getElementById('b4').addEventListener('click', current_tour);
-        	document.getElementById('b5').addEventListener('click', stop_tour);
+        function empty_event() {}
+
+
+        function enable_click_events() {
+            document.getElementById('b1').addEventListener('click', first_tour);
+            document.getElementById('b2').addEventListener('click', optimize);
+            document.getElementById('b3').addEventListener('click', original_tour);
+            document.getElementById('b4').addEventListener('click', current_tour);
+            document.getElementById('b5').addEventListener('click', stop_tour);
         }
-        function disable_click_events(){
-        	document.getElementById('b1').addEventListener('click', empty_event);
-        	document.getElementById('b2').addEventListener('click', empty_event);
-        	document.getElementById('b3').addEventListener('click', empty_event);
-        	document.getElementById('b4').addEventListener('click', empty_event);
+
+        function disable_click_events() {
+            document.getElementById('b1').addEventListener('click', empty_event);
+            document.getElementById('b2').addEventListener('click', empty_event);
+            document.getElementById('b3').addEventListener('click', empty_event);
+            document.getElementById('b4').addEventListener('click', empty_event);
         }
-        
+
         enable_click_events();
-       
+
 
 
 
@@ -128,7 +129,7 @@
             tour_n[1] -> Tourpunkte 0 .. n [[x0, y0, Ort2], .. [xn, yn, Ortn]]
             tour_n[2] -> Länge Tour ([2])
             tour_n[3] -> Zwei getauschte Orte [index1, index2, länge n-1 ([3][2])]
-            									der getauschten Orte
+                                                der getauschten Orte
             tour_n[4] -> 1 wenn keine Orte getauscht werden
             */
 
@@ -168,10 +169,13 @@
             //h.print_tour('d1');
             up_date_canvas(h.tour_first);
         }
-        function stop_tour(){
-        document.getElementById("d4").innerHTML += "tour stop  "  + "<br />";
-        clearInterval(intervalID);
-        
+
+        function stop_tour() {
+            if (intervalID != -1) {
+                //document.getElementById("d4").innerHTML += "tour stop  "  + intervalID +"<br />";
+                clearInterval(intervalID);
+                intervalID = -1;
+            }
         }
 
         //-------------------
@@ -182,8 +186,9 @@
             var ui_v = read_UI();
             ut.clear_p_tag_content();
 
-            an = new annealing(h.tour_n, table_items['Sigma'], table_items['Sigma_reduction_input']);
-            
+            let abbruch = parseInt(table_items['Abbruch_input']);
+            an = new annealing(h.tour_n, table_items['Sigma'], table_items['Sigma_reduction_input'], abbruch);
+
             disable_click_events();
             intervalID = setInterval(run_interval, interval);
 
@@ -208,7 +213,7 @@
             ui.dic_table_modify(table_items);
             if (parseFloat(table_items['Sigma']) <= 0) {
                 clearInterval(intervalID);
-
+                intervalID = -1;
 
                 current_tour();
                 ut.clear_p_tag_content();
@@ -216,15 +221,14 @@
                 document.getElementById("d1").innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + h.tour_n[0][0][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[0][0][2] + '<br />';
                 for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
                     document.getElementById("d1").innerHTML += '&nbsp;&nbsp &nbsp; &nbsp;' + h.tour_n[1][i][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[1][i][2] + '<br />';
-						  
-						  	
+
+
                 }
-								
+
+            } else {
+                enable_click_events();
+
             }
-else{
-					enable_click_events();
-        						
-								}
 
 
         }

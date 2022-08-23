@@ -1,16 +1,17 @@
 class annealing {
-    constructor(tour, sigma, sigma_reduktion) {
-        this.i = 1;
-        this.abbruchZaehler = 0;
+    constructor(tour, sigma, sigma_reduktion, abbruch) {
+            this.i = 1;
+            this.abbruchZaehler = 0;
+            this.abbruch = abbruch;
+            this.sigma = sigma;
+            this.sigma_reduktion = sigma_reduktion;
+            this.tour = tour;
+            this.neue_Laenge = 0;
+            this.alte_Laenge = 0;
 
-        this.sigma = sigma;
-        this.sigma_reduktion = sigma_reduktion;
-        this.tour = tour;
-        this.neue_Laenge = 0;
-        this.alte_Laenge = 0;
 
-
-    }
+        }
+        // git test
     ist_tausch_ok(tour, sigma) {
         if (tour[4] == 0) {
             this.neue_Laenge = tour[2];
@@ -31,12 +32,15 @@ class annealing {
         }
     }
     optimize() {
+        let abbruch_counter = this.abbruch;
         h.change_two_Orte(this.tour);
         let tausch_flag = this.ist_tausch_ok(this.tour, this.sigma);
         if (!tausch_flag) {
+            // to be done
+
+
             h.change_back_two_Orte(h.tour_n);
             this.abbruchZaehler++;
-// test!!!!!!!!
         } else {
 
             this.abbruchZaehler = 0;
