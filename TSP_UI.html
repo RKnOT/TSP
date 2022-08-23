@@ -1,0 +1,231 @@
+<html>
+
+<head>
+    <!-- 
+        https://www.nerdwest.de
+        https://www.youtube.com/watch?v=chH06c60iKc
+
+     -->
+
+    <title>TSP UI</title>
+
+
+    <link rel="stylesheet" href="style_tsp.css">
+    <!-- Adding the Fabric JS Library-->
+    <script type="text/javascript" src="fabric.js"></script>
+    <script type="text/javascript" src="java_tsp_utils.js"></script>
+    <script type="text/javascript" src="java_tsp_classes.js"></script>
+    <script type="text/javascript" src="java_annealing.js"></script>
+
+
+</head>
+
+<body>
+
+    <script>
+        let ut = new Utils();
+
+        ut.generate_p_tags();
+    </script>
+
+    <div class="canvas_absolute"><canvas id="canvas"></canvas></div>
+    <!-- 
+
+		-->
+
+
+    <div class="defaultTextBox Textbox_pos01">Anzahl Staedte: <input type="text" class="tbw" value="20" id="anzahl_staedte" /><button type="button" class="default_button" id='b1'>Generiere Rundreis </button></div>
+
+    <div class="defaultTextBox Textbox_pos02">Sigma: <input type="text" class="tbw" value="10" id="sigma"> Sigma Reduktion: <input type="text" class="tbw" value="0.005" id="sigma_reduktion"></div>
+
+    <div class="defaultTextBox Textbox_pos03">Abbruch n. <input type="text" class="tbw" value="-1" id="abbruch"> stab. Iterationen (-1 deaktivieren)</div>
+
+    <div class="defaultTextBox Textbox_pos04"><input type="text" class="tbw" value="20" id="iteration" /> ms pro Iteration
+        <button type="button" class="default_button" id="b2">Tour optimieren</button></div>
+
+    <div class="defaultTextBox Textbox_pos05"><button type="button" class="default_button" id="b3">original Tour</button>
+        <button type="button" class="default_button" id="b4">current Tour</button>
+    </div>
+
+
+    <table class="table table_pos_01" id="tabelle"></table>
+
+    <script>
+        document.getElementById('b1').addEventListener('click', first_tour);
+        document.getElementById('b2').addEventListener('click', optimize);
+        document.getElementById('b3').addEventListener('click', original_tour);
+        document.getElementById('b4').addEventListener('click', current_tour);
+
+
+
+
+
+
+        var table_items = {
+            "Sigma": 1,
+            "Iterationen": 0,
+            "stabile Iterationen": 0,
+            "Initaldistanz": 0.0,
+            "Currentdistanz": 0.0,
+            "Finaldistanz": 0.0,
+            "endtable": 'end',
+            // nicht in tabelle
+            "Anzahl_Staedte_input": 20,
+            "Sigma_input": 0.5,
+            "Sigma_reduction_input": 5,
+            "Abbruch_input": -1,
+            "Iteration_input": 10,
+        }
+        let ui = new UI_TSP('tabelle', table_items);
+
+        let paused = false;
+        let h = new Object();
+        var intervalID = 0;
+
+        var canvas = ut.generate_canvas_bg_image();
+
+        function up_date_canvas(tour) {
+            ut.remove_objects(canvas);
+            ut.draw_tour(tour, canvas);
+
+        }
+
+
+
+
+        function read_UI() {
+            table_items['Sigma_input'] = ut.getInputValue("sigma", 100);
+            table_items['Sigma'] = table_items['Sigma_input'];
+
+            table_items['Anzahl_Staedte_input'] = ut.getInputValue("anzahl_staedte", 10);
+            table_items['Sigma_reduction_input'] = ut.getInputValue("sigma_reduktion", 0.5, false);
+            table_items['Abbruch_input'] = ut.getInputValue("abbruch", -1);
+            table_items['Iteration_input'] = ut.getInputValue("iteration", 10);
+            table_items['stabile Iterationen'] = 0;
+        }
+
+        let an = new Object();
+
+        function first_tour() {
+
+            /*
+            class get tour array .tour_first, .tour_n 
+            tour_n[0] -> Startpunkt [[x, y, Ort1]]
+            tour_n[1] -> Tourpunkte 0 .. n [[x0, y0, Ort2], .. [xn, yn, Ortn]]
+            tour_n[2] -> Länge Tour ([2])
+            tour_n[3] -> Zwei getauschte Orte [index1, index2, länge n-1 ([3][2])]
+            									der getauschten Orte
+            tour_n[4] -> 1 wenn keine Orte getauscht werden
+            */
+
+            //
+            //ut.clear_p_tag_content();
+            //ut.remove_objects();
+            //document.getElementById("d16").innerHTML = "generate first tour   " + az  + " Staedte" + "<br />";
+            read_UI();
+            //var az_staedte = ut.getInputValue("anzahl_staedte", 15);
+
+            h = new get_Tour(table_items['Anzahl_Staedte_input'], 600, 415);
+            //h.print_tour('d1');
+            //document.getElementById("d12").innerHTML = "tour  first " + h.tour_first[0]  +  ' / ' + h.tour_first[1] + "<br />";
+
+            var tsp_len = h.tour_length.toFixed(3);
+            table_items["Initaldistanz"] = tsp_len
+            table_items["Finaldistanz"] = tsp_len;
+            ui.dic_table_modify(table_items);
+
+            //document.getElementById("d4").innerHTML = "tour   " + h.tour[0]  +  ' / ' + h.tour[1] + "<br />";
+            up_date_canvas(h.tour_first);
+
+
+        }
+        first_tour();
+        //-------------------
+
+
+
+
+        //-------------------
+        function current_tour() {
+            up_date_canvas(h.tour_n);
+        }
+
+        function original_tour() {
+            //h.print_tour('d1');
+            up_date_canvas(h.tour_first);
+        }
+
+        //-------------------
+        let interval = parseFloat(table_items['Iteration_input'] / 1000);
+
+        function optimize() {
+            paused = false;
+            var ui_v = read_UI();
+            ut.clear_p_tag_content();
+
+            an = new annealing(h.tour_n, table_items['Sigma'], table_items['Sigma_reduction_input']);
+            intervalID = setInterval(run_interval, interval);
+
+        }
+
+        //-------------------    
+
+        function run_interval() {
+            //document.getElementById("d1").innerHTML += 'new interval: '+paused+ '<br />';
+
+            if (!paused) {
+
+                paused = !paused;
+                an.optimize();
+
+
+            }
+            paused = !paused;
+
+
+
+            ui.dic_table_modify(table_items);
+            if (parseFloat(table_items['Sigma']) <= 0) {
+                clearInterval(intervalID);
+
+
+                current_tour();
+                document.getElementById("d1").innerHTML += 'Tour optimized  / Tour orignal ' + '<br />';
+                document.getElementById("d1").innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + h.tour_n[0][0][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[0][0][2] + '<br />';
+                for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
+                    document.getElementById("d1").innerHTML += '&nbsp;&nbsp &nbsp; &nbsp;' + h.tour_n[1][i][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[1][i][2] + '<br />';
+
+                }
+
+
+            }
+
+
+
+        }
+
+
+        //---------------------
+
+        // Debug change back zwei orte
+        function ortliste_change_back() {
+            document.getElementById("d5").innerHTML = ut.print_x_y_points_list(h.tour_n, "original");
+            h.change_two_Orte(h.tour_n);
+            document.getElementById("d5").innerHTML += ut.print_x_y_points_list(h.tour_n, "zwei orte getauscht");
+            //ut.print_x_y_points_list(h.tour_n, "d11", "2 Orte vert."); 
+            h.change_back_two_Orte(h.tour_n);
+            document.getElementById("d5").innerHTML += ut.print_x_y_points_list(h.tour_n, "zwei orte zurück getauscht");
+
+        }
+    </script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
