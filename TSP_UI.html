@@ -51,12 +51,24 @@
     <table class="table table_pos_01" id="tabelle"></table>
 
     <script>
-        document.getElementById('b1').addEventListener('click', first_tour);
-        document.getElementById('b2').addEventListener('click', optimize);
-        document.getElementById('b3').addEventListener('click', original_tour);
-        document.getElementById('b4').addEventListener('click', current_tour);
-
-
+        function empty_event(){}
+        
+        
+        function enable_click_events(){
+        	document.getElementById('b1').addEventListener('click', first_tour);
+        	document.getElementById('b2').addEventListener('click', optimize);
+        	document.getElementById('b3').addEventListener('click', original_tour);
+        	document.getElementById('b4').addEventListener('click', current_tour);
+        }
+        function disable_click_events(){
+        	document.getElementById('b1').addEventListener('click', empty_event);
+        	document.getElementById('b2').addEventListener('click', empty_event);
+        	document.getElementById('b3').addEventListener('click', empty_event);
+        	document.getElementById('b4').addEventListener('click', empty_event);
+        }
+        
+        enable_click_events();
+       
 
 
 
@@ -66,8 +78,8 @@
             "Iterationen": 0,
             "stabile Iterationen": 0,
             "Initaldistanz": 0.0,
-            "Currentdistanz": 0.0,
-            "Finaldistanz": 0.0,
+            "Current Distanz": 0.0,
+            "Final Distanz": 0.0,
             "endtable": 'end',
             // nicht in tabelle
             "Anzahl_Staedte_input": 20,
@@ -131,7 +143,7 @@
 
             var tsp_len = h.tour_length.toFixed(3);
             table_items["Initaldistanz"] = tsp_len
-            table_items["Finaldistanz"] = tsp_len;
+            table_items["Final Distanz"] = tsp_len;
             ui.dic_table_modify(table_items);
 
             //document.getElementById("d4").innerHTML = "tour   " + h.tour[0]  +  ' / ' + h.tour[1] + "<br />";
@@ -164,6 +176,8 @@
             ut.clear_p_tag_content();
 
             an = new annealing(h.tour_n, table_items['Sigma'], table_items['Sigma_reduction_input']);
+            
+            disable_click_events();
             intervalID = setInterval(run_interval, interval);
 
         }
@@ -190,16 +204,20 @@
 
 
                 current_tour();
+                ut.clear_p_tag_content();
                 document.getElementById("d1").innerHTML += 'Tour optimized  / Tour orignal ' + '<br />';
                 document.getElementById("d1").innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + h.tour_n[0][0][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[0][0][2] + '<br />';
                 for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
                     document.getElementById("d1").innerHTML += '&nbsp;&nbsp &nbsp; &nbsp;' + h.tour_n[1][i][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + h.tour_first[1][i][2] + '<br />';
-
+						  
+						  	
                 }
-
-
+								
             }
-
+else{
+					enable_click_events();
+        						
+								}
 
 
         }

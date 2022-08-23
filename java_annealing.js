@@ -20,7 +20,10 @@ class annealing {
             }
             let delta = this.neue_Laenge - this.alte_Laenge;
             let calc = Math.exp(-delta / sigma);
-            if (calc > Math.random()) {
+            let random = Math.random();
+            //
+            document.getElementById("d1").innerHTML += 'calc: ' + calc.toFixed(6) + '/ random:  '+ random.toFixed(3) + '<br />';
+            if (calc > random) {
                 return true;
             } else {
                 return false;
@@ -46,8 +49,8 @@ class annealing {
         //document.getElementById("d1").innerHTML += "sigma   " + this.sigma.toFixed(3) + "<br />";
         //document.getElementById("d1").innerHTML = "Länge   " + this.tour[2] + "<br />";
         this.i++;
-        table_items["Finaldistanz"] = this.tour[2].toFixed(3);
-        table_items["Currentdistanz"] = this.neue_Laenge.toFixed(3);
+        table_items["Final Distanz"] = this.tour[2].toFixed(3);
+        table_items["Current Distanz"] = this.neue_Laenge.toFixed(3);
         table_items['Sigma'] = this.sigma.toFixed(3);
         table_items['stabile Iterationen'] = this.abbruchZaehler;
         table_items['Iterationen'] = this.i;
