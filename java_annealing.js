@@ -1,17 +1,16 @@
 class annealing {
     constructor(tour, sigma, sigma_reduktion, abbruch) {
-            this.i = 1;
-            this.abbruchZaehler = 0;
-            this.abbruch = abbruch;
-            this.sigma = sigma;
-            this.sigma_reduktion = sigma_reduktion;
-            this.tour = tour;
-            this.neue_Laenge = 0;
-            this.alte_Laenge = 0;
+        this.i = 1;
+        this.abbruchZaehler = 0;
+        this.abbruch = abbruch;
+        this.sigma = sigma;
+        this.sigma_reduktion = sigma_reduktion;
+        this.tour = tour;
+        this.neue_Laenge = 0;
+        this.alte_Laenge = 0;
 
 
-        }
-        // git test
+    }
     ist_tausch_ok(tour, sigma) {
         if (tour[4] == 0) {
             this.neue_Laenge = tour[2];
