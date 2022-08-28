@@ -95,6 +95,9 @@ class Utils {
             var x_n1 = p_list[1][0][0];
             var y_0 = p_list[0][0][1];
             var y_n1 = p_list[1][0][1];
+
+
+
             //print_points_list(p_list[0], 'd2');
             //print_points_list(p_list[1], 'd2');
             //document.getElementById("d3").innerHTML += " "+ p_list.length + '<br />';
@@ -103,7 +106,7 @@ class Utils {
                     x_n1 = p_list[1][i + 1][0];
                     y_n1 = p_list[1][i + 1][1];
                 }
-                this.draw_line(x_0, y_0, x_n1, y_n1, line_color_list[index], c);
+                this.draw_line(x_0, y_0, x_n1, y_n1, line_color_list[index], c, i);
                 x_0 = x_n1;
                 y_0 = y_n1;
 
@@ -118,8 +121,32 @@ class Utils {
 
         }
         //-------------------------
-    draw_line(x0, y0, x1, y1, color, c, s = 2.5) {
-        var temp = c.add(new fabric.Line([x0, y0, x1, y1], { stroke: color, strokeWidth: 2 }));
+    draw_line(x0, y0, x1, y1, color, c, index) {
+        var temp = c.add(new fabric.Line([x0, y0, x1, y1], { stroke: color, strokeWidth: 1 }));
+        let ca = 'black';
+        let ci = 'white';
+        let ra = 4;
+        let ri = 2;
+        if (index == 0) {
+            ra = 6;
+            ri = 4;
+            ca = 'green'
+            ci = 'green';
+
+        }
+
+
+        let t = ra - ri;
+        let x = x0 - ra;
+        let y = y0 - ra;
+        let xt = x + t;
+        let yt = y + t;
+
+
+        canvas.add(new fabric.Circle({ radius: ra, fill: ca, top: y, left: x }));
+        canvas.add(new fabric.Circle({ radius: ri, fill: ci, top: yt, left: xt }));
+
+
     }
 
     //--------
