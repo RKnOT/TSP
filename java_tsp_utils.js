@@ -161,18 +161,21 @@ class Utils {
     }
 
     //---------
-    generate_p_tags(nr = 20, tag_name = 'd') {
-            var element = document.getElementsByTagName("body")[0];
+    generate_p_tags(nr = 20, tag_class = 'div_p_tags', tag_name = 'd') {
+            let b = document.getElementsByTagName("body")[0];
+            let t = document.createElement("div"); // <div></div>
+            t.setAttribute('id', tag_class);
+            b.appendChild(t);
             for (var i = 1, len = nr; i <= len; i++) {
                 var tag = document.createElement("p"); // <p></p>
                 var att = tag_name + i;
                 tag.setAttribute('id', att);
-                var text = document.createTextNode("");
+                let text = document.createTextNode("");
                 tag.appendChild(text); // <p id='dxx'></p>
-                element.appendChild(tag);
+                t.appendChild(tag);
             }
-        }
-        //---------
+   }      
+    //---------
     clear_p_tag_content(nr = 20) {
             for (var i = 1, len = nr; i <= len; i++) {
                 var att = 'd' + i;

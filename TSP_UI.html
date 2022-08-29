@@ -137,6 +137,7 @@
             var tsp_len = h.tour_length.toFixed(3);
             table_items["Initaldistanz"] = tsp_len
             table_items["Final Distanz"] = tsp_len;
+            ut.clear_p_tag_content();
             ui.dic_table_modify(table_items);
 
             //document.getElementById("d4").innerHTML = "tour   " + h.tour[0]  +  ' / ' + h.tour[1] + "<br />";
@@ -187,13 +188,23 @@
         }
 
         //-------------------    
-        function print_tours(t_n, t_o, tack) {
-            document.getElementById(tack).innerHTML += 'Tour optimized  / Tour orignal ' + '<br />';
-            document.getElementById(tack).innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + t_n[0][0][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + t_o[0][0][2] + '<br />';
-            for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
-                document.getElementById(tack).innerHTML += '&nbsp;&nbsp &nbsp; &nbsp;' + t_n[1][i][2] + '&nbsp; &nbsp; &nbsp;/&nbsp; &nbsp; &nbsp;' + t_o[1][i][2] + '<br />';
+        function print_tours(t_n, t_o, tag1, tag2) {
+            
+            document.getElementById(tag1).innerHTML = 'Tour orignal: ';
+            document.getElementById(tag2).innerHTML = 'Tour optimized: ';
+            
+           document.getElementById(tag1).innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + t_o[0][0][2]+ ' | ';
+           document.getElementById(tag2).innerHTML +=  t_n[0][0][2] + ' | ';
+           for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
+                let ort1 = t_o[1][i][2].substring(4,8);
+                let ort2 = t_n[1][i][2].substring(4,8);
+                
+                
+                //document.getElementById(tag2).innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + t_n[0][0][2]; // + '&nbsp; &nbsp; &nbsp;/
+                document.getElementById(tag1).innerHTML += ' ' + ort1 + ' | ';
+                document.getElementById(tag2).innerHTML += ' ' + ort2 + ' | ';
             }
-
+						
 
         }
 
@@ -218,7 +229,7 @@
 
                 current_tour();
                 ut.clear_p_tag_content();
-                print_tours(h.tour_n, h.tour_first, 'd1');
+                print_tours(h.tour_n, h.tour_first, 'd1','d2');
             } else {
                 enable_click_events();
 

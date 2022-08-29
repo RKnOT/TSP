@@ -1,3 +1,19 @@
+
+#div_p_tags {
+position: absolute;
+    top: 580px;
+    left: 20px;
+}
+
+.p_tag {
+
+	position: absolute;
+	top: 200;
+	left: 50;
+
+}
+
+
 .canvas {
     width: 600px;
     height: 415px;
@@ -7,7 +23,7 @@
 .canvas_absolute {
     position: absolute;
     top: 20px;
-    left: 300px;
+    left: 20px;
 }
 
 .defaultTextBox {
@@ -31,31 +47,31 @@
 .Textbox_pos01 {
     position: absolute;
     top: 450px;
-    left: 300px;
+    left: 20px;
 }
 
 .Textbox_pos02 {
     position: absolute;
     top: 480px;
-    left: 300px;
+    left: 20px;
 }
 
 .Textbox_pos03 {
     position: absolute;
     top: 510px;
-    left: 300px;
+    left: 20px;
 }
 
 .Textbox_pos04 {
     position: absolute;
     top: 540px;
-    left: 300px;
+    left: 20px;
 }
 
 .Textbox_pos05 {
     position: absolute;
     top: 570px;
-    left: 300px;
+    left: 20px;
 }
 
 .default_button {
@@ -75,5 +91,5 @@ td {
 .table_pos_01 {
     position: absolute;
     top: 450px;
-    left: 660px;
+    left: 380px;
 }
