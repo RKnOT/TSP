@@ -142,14 +142,13 @@
 
             //document.getElementById("d4").innerHTML = "tour   " + h.tour[0]  +  ' / ' + h.tour[1] + "<br />";
             up_date_canvas(h.tour_first);
-
+						//print_tours(h.tour_n, h.tour_first, 'd1','d2');
 
         }
         first_tour();
         //-------------------
 
-
-
+				
 
         //-------------------
         function current_tour() {
@@ -196,8 +195,9 @@
            document.getElementById(tag1).innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + t_o[0][0][2]+ ' | ';
            document.getElementById(tag2).innerHTML +=  t_n[0][0][2] + ' | ';
            for (var i = 0, len = h.tour_n[1].length; i < len; i++) {
-                let ort1 = t_o[1][i][2].substring(4,8);
-                let ort2 = t_n[1][i][2].substring(4,8);
+                let ort_len = t_o[1][i][2].len;
+                let ort1 = t_o[1][i][2].substring(4, ort_len);
+                let ort2 = t_n[1][i][2].substring(4, ort_len);
                 
                 
                 //document.getElementById(tag2).innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;' + t_n[0][0][2]; // + '&nbsp; &nbsp; &nbsp;/
