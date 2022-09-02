@@ -153,6 +153,7 @@ class Utils {
 
     remove_objects(c) {
         var objects = c.getObjects();
+        document.getElementById("d10").innerHTML = "canvas object length  " + objects.length + "<br />";
         if (objects.length != 0) {
             for (var i = 0, len = objects.length; i < len; i++) {
                 c.remove(c.getObjects()[0])
