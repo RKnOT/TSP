@@ -29,7 +29,7 @@
             -->
 
 
-    <div class="defaultTextBox Textbox_pos01">Anzahl Staedte: <input type="text" class="tbw" value="20" id="anzahl_staedte" /><button type="button" class="default_button" id='b1'>Generiere Rundreis </button></div>
+    <div class="defaultTextBox Textbox_pos01">Anzahl Staedte: <input type="text" class="tbw" value="150" id="anzahl_staedte" /><button type="button" class="default_button" id='b1'>Generiere Rundreis </button></div>
 
     <div class="defaultTextBox Textbox_pos02">Sigma: <input type="text" class="tbw" value="10000" id="sigma"> Sigma Reduktion: <input type="text" class="tbw" value="0.005" id="sigma_reduktion"></div>
     <div class="defaultTextBox Textbox_pos03"><input type="text" class="tbw" value="5" id="iteration" /> ms pro Iteration
@@ -187,7 +187,7 @@
         }
 
         //-------------------    
-        function print_tours(t_n, t_o, tag1, tag2) {
+        function print_tours(t_n, t_o, tag1 = 'd1', tag2 ='d2') {
             
             document.getElementById(tag1).innerHTML = 'Tour orignal: ';
             document.getElementById(tag2).innerHTML = 'Tour optimized: ';

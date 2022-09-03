@@ -1,0 +1,209 @@
+<html>
+
+<head>
+  
+    <title>canvas test</title>
+
+
+    <link rel="stylesheet" href="style_tsp.css">
+    <!-- Adding the Fabric JS Library-->
+    <script type="text/javascript" src="fabric.js"></script>
+    <script type="text/javascript" src="java_tsp_utils.js"></script>
+    <script type="text/javascript" src="java_tsp_classes.js"></script>
+    <script type="text/javascript" src="java_annealing.js"></script>
+
+
+</head>
+<!--
+<body background='middle-earth.png'>
+-->
+<body >
+    <div class="canvas_absolute"><canvas id="canvas" width="600px" height="415px"></canvas></div>    
+   
+    <div class="Textbox_pos01">
+  <button onclick="removeline()">Remove line</button>
+  <button onclick="addline()">Add line</button>
+  <button onclick="clear_c()">Clear lines</button>
+</div>
+      
+     <script>
+        let ut = new Utils();
+        ut.generate_p_tags();
+   
+ let lines = [{
+    x1: 0,
+    y1: 0,
+    x2: 300,
+    y2: 110
+  },
+  {
+    x1: 10,
+    y1: 10,
+    x2: 350,
+    y2: 110
+  },
+ {
+    x1: 100,
+    y1: 150,
+    x2: 370,
+    y2: 110
+  } 
+];
+var canvas, context;
+
+ //let imagePaper = new Image();
+ //drawlines(canvas, context);
+
+canvas = document.getElementById('canvas');
+let c_w = canvas.width;
+let c_h = canvas.height;
+  
+context = canvas.getContext('2d');
+   
+
+draw(); // intitial draw
+
+
+  
+
+function draw() {
+  document.getElementById("d1").innerHTML = "canvas size width: " + c_w  +  ' / height: ' + c_h + "<br //>";
+  
+                 
+  context.clearRect(0, 0, c_w, c_h);
+  //context.save();
+  let imagePaper = new Image();
+ 
+ imagePaper.onload = function(){
+ context.drawImage(imagePaper,0, 0, c_w, c_h);
+ };
+imagePaper.src = "middle-earth.png";
+context.globalCompositeOperation = 'destination-atop';
+  
+ //context.save();
+  context.strokeStyle = 'grey';
+  context.beginPath();
+  /*
+  for (var x = 0.5; x < c_w; x += 50) {
+    context.moveTo(x, 0);
+    context.lineTo(x, c_w);
+  }
+  for (var y = 0.5; y < c_h; y += 50) {
+    context.moveTo(0, y);
+    context.lineTo(c_w, y);
+  }
+  context.stroke();
+  */
+  context.strokeStyle = 'red';
+  context.lineWidth = 2;
+  context.beginPath();
+  // draw alle the lines
+  lines.forEach(line => {
+    context.moveTo(line.x1, line.y1);
+    context.lineTo(line.x2, line.y2);
+  });
+  context.stroke();
+  context.restore();
+}
+
+function removeline(){
+  lines.shift();
+  draw(); // re-draw the canvas
+}
+
+function addline(){
+  let line = {
+    x1: Math.random()*c_w,
+    y1: Math.random()*c_h,
+    x2: Math.random()*c_w,
+    y2: Math.random()*c_h
+  };
+  lines.push(line);
+  draw(); // re-draw the canvas
+  //document.getElementById("d3").innerHTML += "333333"  + "<br //>";
+}   
+function clear_c(){
+//document.getElementById("d2").innerHTML += "22222222"  + "<br //>";
+
+lines = [];
+draw();
+
+}
+     
+/*      
+       
+  function drawbackground(canvas, context){
+
+    var imagePaper = new Image();
+
+
+        imagePaper.onload = function(){
+
+
+            context.drawImage(imagePaper,0, 0, 600, 415);
+        };
+
+      imagePaper.src = "middle-earth.png";
+}
+
+
+
+function drawlines(canvas, context){
+
+
+            context.beginPath();
+            context.moveTo(188, 130);
+            context.bezierCurveTo(140, 10, 388, 10, 388, 170);
+            context.lineWidth = 10;
+            // line color
+            context.strokeStyle = "black";
+            //context.stroke();
+            
+            //context.beginPath();
+            
+            context.moveTo(0, 0);
+						context.lineTo(300, 150);
+						context.lineWidth = 2;
+            // line color
+            context.strokeStyle = "red";
+            
+            //context.beginPath();
+context.arc(200, 100, 5, 0, 2 * Math.PI, true);
+context.stroke()
+            
+            
+            
+            context.stroke();
+}
+        
+		//let canvas = ut.generate_canvas_bg_image();
+		let canvas = document.getElementById("canvas");
+		let context = canvas.getContext("2d");
+		
+drawbackground(canvas, context);
+context.globalCompositeOperation = 'destination-atop';
+drawlines(canvas, context);
+		
+		
+		
+		
+		const img = new Image();
+		img.src = "middle-earth.png";
+		img.onload = () => {
+  		context.drawImage(img, 0, 0);
+}
+
+context.beginPath();
+context.moveTo(0, 0);
+context.lineTo(300, 150);
+context.stroke();		
+*/				
+								
+</script>
+
+
+
+
+</body>
+
+</html>
