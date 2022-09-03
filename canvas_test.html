@@ -17,6 +17,10 @@
 <!--
 <body background='middle-earth.png'>
 -->
+
+
+
+
 <body >
     <div class="canvas_absolute"><canvas id="canvas" width="600px" height="415px"></canvas></div>    
    
@@ -29,7 +33,11 @@
      <script>
         let ut = new Utils();
         ut.generate_p_tags();
-   
+        document.getElementById("d1").innerHTML = "11111111"  + "<br //>";
+
+
+/*
+
  let lines = [{
     x1: 0,
     y1: 0,
@@ -49,10 +57,14 @@
     y2: 110
   } 
 ];
-var canvas, context;
+
+
+let canvas, context;
 
  //let imagePaper = new Image();
  //drawlines(canvas, context);
+
+
 
 canvas = document.getElementById('canvas');
 let c_w = canvas.width;
@@ -69,8 +81,7 @@ draw(); // intitial draw
 function draw() {
   document.getElementById("d1").innerHTML = "canvas size width: " + c_w  +  ' / height: ' + c_h + "<br //>";
   
-                 
-  context.clearRect(0, 0, c_w, c_h);
+  //context.clearRect(0, 0, c_w, c_h);
   //context.save();
   let imagePaper = new Image();
  
@@ -80,10 +91,10 @@ function draw() {
 imagePaper.src = "middle-earth.png";
 context.globalCompositeOperation = 'destination-atop';
   
- //context.save();
+ context.save();
   context.strokeStyle = 'grey';
   context.beginPath();
-  /*
+  
   for (var x = 0.5; x < c_w; x += 50) {
     context.moveTo(x, 0);
     context.lineTo(x, c_w);
@@ -93,7 +104,7 @@ context.globalCompositeOperation = 'destination-atop';
     context.lineTo(c_w, y);
   }
   context.stroke();
-  */
+  
   context.strokeStyle = 'red';
   context.lineWidth = 2;
   context.beginPath();
@@ -102,14 +113,21 @@ context.globalCompositeOperation = 'destination-atop';
     context.moveTo(line.x1, line.y1);
     context.lineTo(line.x2, line.y2);
   });
+  
   context.stroke();
   context.restore();
+  
+  
 }
+
 
 function removeline(){
   lines.shift();
+  document.getElementById("d4").innerHTML += "11111111"  + "<br //>";
   draw(); // re-draw the canvas
 }
+
+
 
 function addline(){
   let line = {
@@ -120,17 +138,19 @@ function addline(){
   };
   lines.push(line);
   draw(); // re-draw the canvas
-  //document.getElementById("d3").innerHTML += "333333"  + "<br //>";
+  document.getElementById("d3").innerHTML += "333333"  + "<br //>";
 }   
+
+
 function clear_c(){
-//document.getElementById("d2").innerHTML += "22222222"  + "<br //>";
+document.getElementById("d2").innerHTML += "22222222"  + "<br //>";
 
 lines = [];
 draw();
 
 }
      
-/*      
+    
        
   function drawbackground(canvas, context){
 

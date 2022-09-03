@@ -52,7 +52,7 @@ class Utils {
     print_points_list(list_points, div_id, add_Flag = false) {
         if (add_Flag == true) {
             document.getElementById(div_id).innerHTML += '';
-        } else {
+""        } else {
             document.getElementById(div_id).innerHTML = '';
         }
         for (var i = 0, len = list_points.length; i < len; i++) {
@@ -71,6 +71,12 @@ class Utils {
     }
 
     //------------
+   generate_canvas_bg_image(){
+     this.draw_tours();
+ 
+   } 
+    
+    /*
     generate_canvas_bg_image() {
         var canvas = new Object();
         canvas = new fabric.Canvas("canvas", { backgroundImage: "middle-earth.png", });
@@ -82,8 +88,26 @@ class Utils {
         //canvas.renderAll();
         return canvas;
     }
-
+*/
     //-----------------    
+   
+   draw_tours(p_list = ){
+     let canvas, context;
+     canvas = document.getElementById('canvas');
+     let c_w = canvas.width;
+     let c_h = canvas.height;
+     context = canvas.getContext('2d');
+     context.clearRect(0, 0, c_w, c_h);
+     //context.save();
+     let imagePaper = new Image();
+     imagePaper.onload = function(){
+     context.drawImage(imagePaper, 0, 0, c_w, c_h);
+     };
+     imagePaper.src = "middle-earth.png";
+     //context.globalCompositeOperation = 'destination-atop';
+    
+   }
+   /*
     draw_tour(p_list, c) {
             var line_color_list = [
                 ['red'],
@@ -120,6 +144,7 @@ class Utils {
             this.draw_line(x_0, y_0, x_n1, y_n1, line_color_list[index], c);
 
         }
+  */      
         //-------------------------
     draw_line(x0, y0, x1, y1, color, c, index) {
         var temp = c.add(new fabric.Line([x0, y0, x1, y1], { stroke: color, strokeWidth: 1 }));
