@@ -58,7 +58,6 @@ canvas = document.getElementById('canvas');
 let c_w = canvas.width;
 let c_h = canvas.height;
   
-context = canvas.getContext('2d');
    
 
 draw(); // intitial draw
@@ -69,7 +68,7 @@ draw(); // intitial draw
 function draw() {
   document.getElementById("d1").innerHTML = "canvas size width: " + c_w  +  ' / height: ' + c_h + "<br //>";
   
-                 
+  context = canvas.getContext('2d');               
   context.clearRect(0, 0, c_w, c_h);
   //context.save();
   let imagePaper = new Image();
@@ -77,13 +76,13 @@ function draw() {
  imagePaper.onload = function(){
  context.drawImage(imagePaper,0, 0, c_w, c_h);
  };
-imagePaper.src = "middle-earth.png";
-context.globalCompositeOperation = 'destination-atop';
+ imagePaper.src = "middle-earth.png";
   
- //context.save();
+/*  
+ context.save();
   context.strokeStyle = 'grey';
   context.beginPath();
-  /*
+  
   for (var x = 0.5; x < c_w; x += 50) {
     context.moveTo(x, 0);
     context.lineTo(x, c_w);
@@ -94,6 +93,20 @@ context.globalCompositeOperation = 'destination-atop';
   }
   context.stroke();
   */
+  context.beginPath();
+  context.strokeStyle = 'green';
+  context.lineWidth = 2;
+  context.moveTo(150,150);
+  context.lineTo(500,400);
+	context.stroke();
+
+  context.beginPath();
+  context.strokeStyle = 'black';
+  context.lineWidth = 2;
+  context.moveTo(50,250);
+  context.lineTo(20, 30);
+	context.stroke();
+  
   context.strokeStyle = 'red';
   context.lineWidth = 2;
   context.beginPath();
@@ -101,9 +114,17 @@ context.globalCompositeOperation = 'destination-atop';
   lines.forEach(line => {
     context.moveTo(line.x1, line.y1);
     context.lineTo(line.x2, line.y2);
+    context.arc(line.x2, line.y2, 2, 0, 2 * Math.PI, true);
+    context.moveTo(line.x1, line.y1);
+    context.arc(line.x1, line.y1, 2, 0, 2 * Math.PI, true);
+   
+   
+   
   });
-  context.stroke();
-  context.restore();
+context.stroke();
+context.restore();  
+  
+  context.globalCompositeOperation = 'destination-atop';  
 }
 
 function removeline(){
@@ -125,7 +146,7 @@ function addline(){
 function clear_c(){
 //document.getElementById("d2").innerHTML += "22222222"  + "<br //>";
 
-lines = [];
+//lines = [];
 draw();
 
 }
@@ -198,7 +219,9 @@ context.moveTo(0, 0);
 context.lineTo(300, 150);
 context.stroke();		
 */				
-								
+
+	document.getElementById("d20").innerHTML += "Ende !!!!!"  + "<br //>";							
+																								
 </script>
 
 
