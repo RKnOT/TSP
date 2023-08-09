@@ -9,7 +9,10 @@ class UI_TSP {
             this.end_table = Object.keys(dic).findIndex(x => x == "endtable");
             this.dic_tabelle_generieren(Object.keys(dic).length);
         }
-        //----
+    
+    
+    
+    //----
     dic_table_modify(dic) {
             const tabelle = document.getElementById(this.id);
             var dic_array = this.convert_dic_to_array(dic);
@@ -20,7 +23,7 @@ class UI_TSP {
                 z.innerHTML = dic_array[1][i];
             }
         }
-        //----
+    //----
     dic_tabelle_generieren(table_items) {
             const tabelle = document.getElementById(this.id);
             var dic_array = this.convert_dic_to_array(this.dic);
